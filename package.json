@@ -1,13 +1,23 @@
 {
   "name": "vscode-formatter-godot",
   "displayName": "vscode-formatter-godot",
-  "description": "",
+  "description": "Godot Formatter and Linter",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kuhnchris/vscode-formatter-godot"
+  },
+  "author": {
+    "name": "KuhnChris",
+    "email": "kuhnchris+gdext@kuhnchris.eu",
+    "url": "https://github.com/kuhnchris"
+  },
+  "license": "CC-BY-SA",
   "engines": {
     "vscode": "^1.53.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
   ],
   "activationEvents": [
     "onLanguage:gdscript"

@@ -1,10 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as cp from 'child_process';
-import * as vscode from 'vscode';
 import * as os from 'os';
+import * as vscode from 'vscode';
 
 var ochan: vscode.OutputChannel;
+const matchregex: RegExp = /(\w+\.gd):(\d+):\s?Error\:\s?(.+)?/g;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -32,14 +33,17 @@ export function activate(context: vscode.ExtensionContext) {
             var cpo = cp.exec(cmd, (err, stdout, stderr) => {
 
                 let diagArr: vscode.Diagnostic[] = [];
-                stdout.split('\n').forEach((i) => {
-                    var iS = i.split(":", 4);
-                    if (iS.length == 4) {
-                        var iNum = Number.parseInt(iS[1]);
-                        var iStr = iS[3];
-                        ochan.append("err: " + iNum + " - " + iStr + '\n');
-                        var va = new vscode.Diagnostic(new vscode.Range(new vscode.Position(iNum-1, 0), new vscode.Position(iNum-1, 9999)), iS[3], vscode.DiagnosticSeverity.Error);
-                        va.code = "test";
+                const lines = stdout.split('\n').map((line) => line.trim()).filter((line) => line.length > 0);
+                lines.map((line:string) => {
+                    matchregex.lastIndex = 0;
+                    const match = matchregex.exec(line);
+                    if (match) {
+                        let filenname = match[1];
+                        let line = parseInt(match[2]) - 1;
+                        let message = match[3];
+                        ochan.append("Error: " + filenname + ":" + line + ": " + message + "");
+                        var va = new vscode.Diagnostic(new vscode.Range(line, 0, line, 0), message, vscode.DiagnosticSeverity.Error);
+                        va.code = "gdlint";
                         diagArr.push(va);
                     }
 

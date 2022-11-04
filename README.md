@@ -14,6 +14,4 @@ See also: https://pypi.org/project/gdtoolkit/
 
 ## Release Notes
 
-
-### 1.0.0
-Initial release without big settings and stuff - enough for me to work with. :-)
+See CHANGELOG.md

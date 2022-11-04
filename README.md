@@ -19,4 +19,4 @@ See CHANGELOG.md
 
 ## License
 
-See Licence.txt
+See License.txt

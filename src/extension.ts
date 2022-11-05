@@ -1,23 +1,12 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as cp from 'child_process';
 import * as os from 'os';
 import * as vscode from 'vscode';
 
 var ochan: vscode.OutputChannel;
 const matchregex: RegExp = /(\w+\.gd):(\d+):\s?Error\:\s?(.+)?/g;
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Congratulations, your extension "vscode-formatter-godot" is now active!');
-
-    /*context.subscriptions.push(vscode.commands.registerCommand('vscode-formatter-godot.format-foo', () => {
-        const { activeTextEditor } = vscode.window;
-
-        if (activeTextEditor) {
-            vscode.window.showInformationMessage(activeTextEditor.document.languageId);
-        }
-    })); */
+    console.log('\'GDScript Formatter & Linter\' is now active!');
 
     ochan = vscode.window.createOutputChannel("Godot Formatter");
 

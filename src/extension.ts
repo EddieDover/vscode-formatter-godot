@@ -15,11 +15,12 @@ export function activate(context: vscode.ExtensionContext) {
     var doLint = (doc: vscode.TextDocument) => {
         let content = doc.fileName;
         let uri = doc.uri;
+        let dir = vscode.workspace.getWorkspaceFolder(uri)?.uri.fsPath || "";
 
         if (uri.scheme === "file" && doc.languageId === 'gdscript') {
             let cmd = `gdlint ` + content + ` 2>&1`;
 
-            var cpo = cp.exec(cmd, (err, stdout, stderr) => {
+            var cpo = cp.exec(cmd, {cwd: dir}, (err, stdout, stderr) => {
 
                 let diagArr: vscode.Diagnostic[] = [];
                 const lines = stdout.split('\n').map((line) => line.trim()).filter((line) => line.length > 0);

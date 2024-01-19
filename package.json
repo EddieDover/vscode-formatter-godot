@@ -44,7 +44,29 @@
           ".gd"
         ]
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Godot Formatter and Linter",
+      "properties": {
+        "godotFormatterAndLinter.lintSeverityLevel": {
+          "enum": [
+            "Error",
+            "Warning",
+            "Information",
+            "Hint"
+          ],
+          "enumDescriptions": [
+            "Error",
+            "Warning",
+            "Information",
+            "Hint"
+          ],
+          "default": "Error",
+          "description": "Controls at what severity level all linting errors are set."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

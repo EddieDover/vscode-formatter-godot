@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
         let content = doc.fileName;
         let uri = doc.uri;
         let dir = vscode.workspace.getWorkspaceFolder(uri)?.uri.fsPath || "";
+        const severityLevel = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("lintSeverityLevel", "Error");
 
         if (uri.scheme === "file" && doc.languageId === 'gdscript') {
             let cmd = `gdlint ` + content + ` 2>&1`;
@@ -32,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let line = parseInt(match[2]) - 1;
                         let message = match[3];
                         ochan.append("Error: " + filenname + ":" + line + ": " + message + "");
-                        var va = new vscode.Diagnostic(new vscode.Range(line, 0, line, 0), message, vscode.DiagnosticSeverity.Error);
+                        const va = new vscode.Diagnostic(new vscode.Range(line, 0, line, 0), message, vscode.DiagnosticSeverity[severityLevel]);
                         va.code = "gdlint";
                         diagArr.push(va);
                     }

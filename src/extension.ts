@@ -19,27 +19,27 @@ export function activate(context: vscode.ExtensionContext) {
         const severityLevel = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("lintSeverityLevel", "Error");
 
         if (uri.scheme === "file" && doc.languageId === 'gdscript') {
-            let cmd = `gdlint ` + content + ` 2>&1`;
+            let cmd = `gdlint "` + content + `" 2>&1`;
 
-            var cpo = cp.exec(cmd, {cwd: dir}, (err, stdout, stderr) => {
+            var cpo = cp.exec(cmd, { cwd: dir }, (err, stdout, stderr) => {
 
                 let diagArr: vscode.Diagnostic[] = [];
                 const lines = stdout.split('\n').map((line) => line.trim()).filter((line) => line.length > 0);
-                lines.map((line:string) => {
+                lines.map((line: string) => {
                     matchregex.lastIndex = 0;
                     const match = matchregex.exec(line);
                     if (match) {
                         let filenname = match[1];
                         let line = parseInt(match[2]) - 1;
                         let message = match[3];
-                        ochan.append("Error: " + filenname + ":" + line + ": " + message + "");
+                        ochan.append("Error: " + filenname + ":" + line + ": " + message + "\n");
                         const va = new vscode.Diagnostic(new vscode.Range(line, 0, line, 0), message, vscode.DiagnosticSeverity[severityLevel]);
                         va.code = "gdlint";
                         diagArr.push(va);
                     }
 
                 });
-                ochan.append("setting an array with " + diagArr.length + "elements as diag for URI: " + uri + '\n');
+                ochan.append("setting an array with " + diagArr.length + " elements as diag for URI: " + uri + '\n');
                 diag.set(uri, []);
                 diag.set(uri, diagArr);
 
@@ -70,8 +70,8 @@ export function activate(context: vscode.ExtensionContext) {
 
                 var cpo = cp.exec(cmd, (err, stdout, stderr) => {
                     //ochan.append("stdout: " + stdout);
-                    ochan.append("stderr: " + stderr);
-                    ochan.append("err: " + err);
+                    ochan.append("stderr: " + stderr + "\n");
+                    ochan.append("err: " + err + "\n");
                     if (err) {
                         rej([]);
                     }

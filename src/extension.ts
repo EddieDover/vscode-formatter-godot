@@ -65,8 +65,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider('gdscript', {
         async provideDocumentFormattingEdits(document: vscode.TextDocument): Promise<vscode.TextEdit[]> {
             let content = document.getText();
+            const indentType = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("indentType");
+            const indentSpacesSize = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("indentSpacesSize");
+            const indentParam = (indentType === "Tabs") ? "" : `--use-spaces=${indentSpacesSize}`;
+            const lineLength = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("lineLength");
             return new Promise((res, rej) => {
-                let cmd = `gdformat -`;
+                let cmd = `gdformat --line-length=${lineLength} ${indentParam} -`;
 
                 var cpo = cp.exec(cmd, (err, stdout, stderr) => {
                     //ochan.append("stdout: " + stdout);

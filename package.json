@@ -68,7 +68,33 @@
             "Hint"
           ],
           "default": "Error",
-          "description": "Controls at what severity level all linting errors are set."
+          "description": "Controls at what severity level all linting errors are set.",
+          "order": 0
+        },
+        "godotFormatterAndLinter.lineLength": {
+          "type": "integer",
+          "default": 80,
+          "description": "Maximum number of characters per line for the formatter.",
+          "order": 1
+        },
+        "godotFormatterAndLinter.indentType": {
+          "enum": [
+            "Tabs",
+            "Spaces"
+          ],
+          "enumDescriptions": [
+            "Tabs",
+            "Spaces"
+          ],
+          "default": "Tabs",
+          "description": "The type of indentation for the formatter.",
+          "order": 2
+        },
+        "godotFormatterAndLinter.indentSpacesSize": {
+          "type": "integer",
+          "default": 4,
+          "markdownDescription": "Number of spaces for each level of indentation. Only active when `#godotFormatterAndLinter.indentType#` is set to `Spaces`.",
+          "order": 3
         }
       }
     }

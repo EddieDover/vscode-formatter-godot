@@ -29,11 +29,11 @@ export function activate(context: vscode.ExtensionContext) {
                     matchregex.lastIndex = 0;
                     const match = matchregex.exec(line);
                     if (match) {
-                        let filenname = match[1];
-                        let line = parseInt(match[2]) - 1;
+                        let filename = match[1];
+                        let lineno = parseInt(match[2]) - 1;
                         let message = match[3];
-                        ochan.append("Error: " + filenname + ":" + line + ": " + message + "\n");
-                        const va = new vscode.Diagnostic(new vscode.Range(line, 0, line, 0), message, vscode.DiagnosticSeverity[severityLevel]);
+                        ochan.append("Error: " + filename + ":" + lineno + ": " + message + "\n");
+                        const va = new vscode.Diagnostic(new vscode.Range(lineno, 0, lineno, line.length - 1), message, vscode.DiagnosticSeverity[severityLevel]);
                         va.code = "gdlint";
                         diagArr.push(va);
                     }
@@ -65,8 +65,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider('gdscript', {
         async provideDocumentFormattingEdits(document: vscode.TextDocument): Promise<vscode.TextEdit[]> {
             let content = document.getText();
+            const indentType = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("indentType");
+            const indentSpacesSize = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("indentSpacesSize");
+            const indentParam = (indentType === "Tabs") ? "" : `--use-spaces=${indentSpacesSize}`;
+            const lineLength = vscode.workspace.getConfiguration("godotFormatterAndLinter").get("lineLength");
             return new Promise((res, rej) => {
-                let cmd = `gdformat -`;
+                let cmd = `gdformat --line-length=${lineLength} ${indentParam} -`;
 
                 var cpo = cp.exec(cmd, (err, stdout, stderr) => {
                     //ochan.append("stdout: " + stdout);

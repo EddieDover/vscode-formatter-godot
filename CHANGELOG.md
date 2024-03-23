@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.3.0
+
+Added line length and indentation to config. - @fy-meng
+Improved linter visualization - @fy-meng
+
+## 1.2.0
+
+Fixed linter failing on paths that contain spaces - @fy-meng
+
 ## 1.1.2
 
 - Feature: Add a setting that allows picking which Severity Level is attached to each linting error in the display. - @chris18

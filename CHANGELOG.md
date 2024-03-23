@@ -2,12 +2,13 @@
 
 ## 1.3.0
 
-Added line length and indentation to config. - @fy-meng
-Improved linter visualization - @fy-meng
+- Added line length and indentation to config. - @fy-meng
+
+- Improved linter visualization - @fy-meng
 
 ## 1.2.0
 
-Fixed linter failing on paths that contain spaces - @fy-meng
+- Fixed linter failing on paths that contain spaces - @fy-meng
 
 ## 1.1.2
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.3.1
+
+- Modified default line length to match the gdlint default
+
 ## 1.3.0
 
 - Added line length and indentation to config. - @fy-meng

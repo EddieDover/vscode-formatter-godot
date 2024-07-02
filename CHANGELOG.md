@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.0
+
+- Added failure safeguards to both gdlint and gdformat calls. Should now gractefully handle major syntax errors.
+
 ## 1.3.1
 
 - Modified default line length to match the gdlint default

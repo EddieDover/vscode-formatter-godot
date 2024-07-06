@@ -4,6 +4,8 @@ import * as vscode from "vscode";
 
 export const matchRegexError: RegExp = /(\w+\.gd):(\d+):\s?Error:\s?(.+)?/g;
 export const matchRegexToken: RegExp = /(.+) at line (\d+), column (\d+)\./gm;
+export const matchRegexUnexpectedToken: RegExp =
+  /Token(.+):(\d+):(\d+): Unexpected token(.+)/g;
 export const matchRegexTokenFile: RegExp = /['|"]?(.+\.gd):['|"]?/g;
 
 const severityLevel = vscode.workspace
@@ -49,6 +51,36 @@ export const scanLineForTokenError = (
   match = matchRegexToken.exec(line);
   if (match) {
     let message = match[1];
+    let lineno = parseInt(match[2]);
+    let colno = parseInt(match[3]);
+    ochan.append(
+      "Token: " + tokenFile + ":" + lineno + ":" + colno + ": " + message + "\n"
+    );
+    const va = new vscode.Diagnostic(
+      new vscode.Range(lineno, 0, lineno, line.length - 1),
+      message,
+      vscode.DiagnosticSeverity[severityLevel]
+    );
+    va.code = code;
+    diagArr.push(va);
+  }
+};
+
+export const scanLineForUnexpectedTokenError = (
+  line: string,
+  diagArr: any[],
+  code: string,
+  ochan: vscode.OutputChannel
+) => {
+  let tokenFile = "";
+  let match = matchRegexTokenFile.exec(line);
+  if (match) {
+    tokenFile = match[1];
+  }
+
+  match = matchRegexUnexpectedToken.exec(line);
+  if (match) {
+    let message = match[4];
     let lineno = parseInt(match[2]);
     let colno = parseInt(match[3]);
     ochan.append(
@@ -124,6 +156,7 @@ export const lintDocument = (
 
       scanLineForGeneralError(line, diagArr, "gdlint", ochan);
       scanLineForTokenError(line, diagArr, "gdlint", ochan);
+      scanLineForUnexpectedTokenError(line, diagArr, "gdlint", ochan);
     });
 
     diag.clear();
@@ -133,7 +166,10 @@ export const lintDocument = (
 };
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log("'GDScript Formatter & Linter' is now active!");
+  const version = vscode.extensions.getExtension(
+    "eddiedover.gdscript-formatter-linter"
+  );
+  console.log(`'GDScript Formatter & Linter' ${version} is now active!`);
 
   const ochan = vscode.window.createOutputChannel("Godot Formatter");
   const diag = vscode.languages.createDiagnosticCollection("gdlint");

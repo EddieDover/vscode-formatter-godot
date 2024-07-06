@@ -166,9 +166,10 @@ export const lintDocument = (
 };
 
 export function activate(context: vscode.ExtensionContext) {
-  const version = vscode.extensions.getExtension(
+  const extension = vscode.extensions.getExtension(
     "eddiedover.gdscript-formatter-linter"
   );
+  const version = extension?.packageJSON.version;
   console.log(`'GDScript Formatter & Linter' ${version} is now active!`);
 
   const ochan = vscode.window.createOutputChannel("Godot Formatter");

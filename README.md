@@ -6,8 +6,8 @@ It is based on prior work by [Chris Kuhn](https://github.com/kuhnchris).
 
 ## Features
 
-- Lints on save (gdlint)
-- Formats on save & via Format Document (gdformat)
+- Linting via gdlint
+- Document formatting with gdformat
 
 ## Requirements
 
@@ -19,7 +19,7 @@ See also: https://pypi.org/project/gdtoolkit/
 
 ## Optional
 
-It's recommended to use the [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens) plugin alongside this one, for inline display of problems.
+It's highly recommended to use the [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens) plugin alongside this one, for inline display of problems.
 
 ## Release Notes
 

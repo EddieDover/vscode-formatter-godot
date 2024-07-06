@@ -178,19 +178,24 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor((editor) => {
       if (editor) {
-        lintDocument(editor.document, diag, ochan);
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+          lintDocument(editor.document, diag, ochan);
+        }, 300); // 300ms debounce
       }
     })
   );
 
   context.subscriptions.push(
-    vscode.workspace.onDidChangeTextDocument((e) => {
-      if (!e?.document?.isDirty) {
+    vscode.workspace.onDidChangeTextDocument((editor) => {
+      if (!editor?.document?.isDirty) {
         if (timeout) {
           clearTimeout(timeout);
         }
         timeout = setTimeout(() => {
-          lintDocument(e.document, diag, ochan);
+          lintDocument(editor.document, diag, ochan);
         }, 300); // 300ms debounce
       }
     })

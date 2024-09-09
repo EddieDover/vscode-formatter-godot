@@ -145,7 +145,12 @@ export const lintDocument = (
   if (uri.scheme === "file" && doc.languageId === "gdscript") {
     let cmd = `gdlint "${content}" 2>&1`;
 
-    const result = cp.spawnSync(cmd, { shell: true, stdio: "pipe" });
+    const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+    const result = cp.spawnSync(cmd, {
+      shell: true,
+      stdio: "pipe",
+      cwd: workspaceFolder?.uri.fsPath,
+    });
 
     const { stdout } = result;
     let lines: string[] = stdout?.toString().split("\n") ?? [];

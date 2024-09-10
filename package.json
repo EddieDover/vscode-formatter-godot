@@ -52,7 +52,7 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "Godot Formatter and Linter",
+      "title": "GDScript Formatter and Linter",
       "properties": {
         "godotFormatterAndLinter.lintSeverityLevel": {
           "enum": [

@@ -3,7 +3,7 @@
   "displayName": "GDScript Formatter & Linter",
   "description": "Godot Formatter and Linter",
   "icon": "images/godot_icon.png",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/eddiedover/vscode-formatter-godot"
@@ -54,6 +54,11 @@
       "type": "object",
       "title": "GDScript Formatter and Linter",
       "properties": {
+        "godotFormatterAndLinter.gdformatPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional path to the gdformat executable. If empty, it's assumed to be in the system PATH."
+        },
         "godotFormatterAndLinter.lintSeverityLevel": {
           "enum": [
             "Error",

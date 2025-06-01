@@ -142,8 +142,12 @@ export const lintDocument = (
   let uri = doc.uri;
   let diagArr: vscode.Diagnostic[] = [];
 
+  const config = vscode.workspace.getConfiguration("godotFormatterAndLinter");
+  const gdlintPath = config.get<string>("gdlintPath", "").trim();
+  const commandBase = gdlintPath ? `"${gdlintPath}"` : "gdlint";
+
   if (uri.scheme === "file" && doc.languageId === "gdscript") {
-    let cmd = `gdlint "${content}" 2>&1`;
+    const cmd = `${commandBase} "${content}" 2>&1`;
 
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
     const result = cp.spawnSync(cmd, {
@@ -155,7 +159,7 @@ export const lintDocument = (
     const { stdout } = result;
     let lines: string[] = stdout?.toString().split("\n") ?? [];
     lines = lines.map((line) => line.trim()).filter((line) => line.length > 0);
-    lines.map((line: string) => {
+    lines.forEach((line: string) => {
       matchRegexTokenFile.lastIndex = 0;
       matchRegexError.lastIndex = 0;
 

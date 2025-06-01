@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.4.2
+
+- gdlint path is now configurable in the options.
+
+## 1.4.1
+
+- gdformat path is now configurable in the options.
+
 ## 1.4.0
 
 - Improved both the functionality and speed of the extension.

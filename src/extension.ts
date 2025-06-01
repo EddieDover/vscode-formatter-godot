@@ -100,19 +100,17 @@ export async function formatDocument(
   document: vscode.TextDocument
 ): Promise<vscode.TextEdit[]> {
   let content = document.getText();
-  const indentType = vscode.workspace
-    .getConfiguration("godotFormatterAndLinter")
-    .get("indentType");
-  const indentSpacesSize = vscode.workspace
-    .getConfiguration("godotFormatterAndLinter")
-    .get("indentSpacesSize");
+  const config = vscode.workspace.getConfiguration("godotFormatterAndLinter");
+  const indentType = config.get("indentType");
+  const indentSpacesSize = config.get("indentSpacesSize");
   const indentParam =
     indentType === "Tabs" ? "" : `--use-spaces=${indentSpacesSize}`;
-  const lineLength = vscode.workspace
-    .getConfiguration("godotFormatterAndLinter")
-    .get("lineLength");
+  const lineLength = config.get("lineLength");
+  const gdformatPath = config.get<string>("gdformatPath", "").trim();
+
   return new Promise((res, rej) => {
-    let cmd = `gdformat --line-length=${lineLength} ${indentParam} -`;
+    let commandBase = gdformatPath ? `"${gdformatPath}"` : "gdformat";
+    let cmd = `${commandBase} --line-length=${lineLength} ${indentParam} -`;
 
     const cpo = cp.exec(cmd, (err, stdout, stderr) => {
       if (err) {

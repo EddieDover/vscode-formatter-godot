@@ -140,11 +140,10 @@ export const lintDocument = (
   let uri = doc.uri;
   let diagArr: vscode.Diagnostic[] = [];
 
-  const config = vscode.workspace.getConfiguration("godotFormatterAndLinter");
-  const gdlintPath = config.get<string>("gdlintPath", "").trim();
-  const commandBase = gdlintPath ? `"${gdlintPath}"` : "gdlint";
-
   if (uri.scheme === "file" && doc.languageId === "gdscript") {
+    const config = vscode.workspace.getConfiguration("godotFormatterAndLinter");
+    const gdlintPath = config.get<string>("gdlintPath", "").trim();
+    const commandBase = gdlintPath ? `"${gdlintPath}"` : "gdlint";
     const cmd = `${commandBase} "${content}" 2>&1`;
 
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);

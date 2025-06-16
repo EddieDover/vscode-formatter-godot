@@ -126,7 +126,11 @@ export async function formatDocument(
       },
       (err, stdout, stderr) => {
         if (err) {
-          rej(err);
+          rej(
+            new Error(
+              typeof err === "string" ? err : err?.message ?? String(err)
+            )
+          );
         }
         res([
           vscode.TextEdit.replace(

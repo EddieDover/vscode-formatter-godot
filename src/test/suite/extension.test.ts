@@ -7,8 +7,12 @@ const getFixtureFilePath = (root: string, filename: string) =>
   path.resolve(root, filename);
 
 const getFixture = async (category: string, type: string, filename: string) => {
+  const isWindows = process.platform === "win32";
   return await vscode.workspace.openTextDocument(
-    getFixtureFilePath(`../../fixtures/${category}/${type}/`, filename)
+    getFixtureFilePath(
+      `${isWindows ? "../../" : ""}fixtures/${category}/${type}/`,
+      filename
+    )
   );
 };
 

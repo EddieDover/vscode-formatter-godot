@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.3
+
+- Hopefully fixed longstanding issue where Formatting would corrupt non-English characters.
+
 ## 1.4.2
 
 - gdlint path is now configurable in the options.

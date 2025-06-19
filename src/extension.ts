@@ -112,20 +112,37 @@ export async function formatDocument(
     let commandBase = gdformatPath ? `"${gdformatPath}"` : "gdformat";
     let cmd = `${commandBase} --line-length=${lineLength} ${indentParam} -`;
 
-    const cpo = cp.exec(cmd, (err, stdout, stderr) => {
-      if (err) {
-        rej(err);
-      }
-      res([
-        vscode.TextEdit.replace(
-          new vscode.Range(
-            new vscode.Position(0, 0),
-            new vscode.Position(document.lineCount, 9999999)
+    const cpo = cp.exec(
+      cmd,
+      {
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          PYTHONUTF8: "1",
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          PYTHONIOENCODING: "utf-8",
+        },
+      },
+      (err, stdout, stderr) => {
+        if (err) {
+          rej(
+            new Error(
+              typeof err === "string" ? err : err?.message ?? String(err)
+            )
+          );
+        }
+        res([
+          vscode.TextEdit.replace(
+            new vscode.Range(
+              new vscode.Position(0, 0),
+              new vscode.Position(document.lineCount, 9999999)
+            ),
+            stdout
           ),
-          stdout
-        ),
-      ]);
-    });
+        ]);
+      }
+    );
     cpo.stdin?.write(content);
     cpo.stdin?.end(os.EOL);
   });
@@ -215,4 +232,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  /* Not sure if I need this but I'm tired of the linting 'problem' */
+}

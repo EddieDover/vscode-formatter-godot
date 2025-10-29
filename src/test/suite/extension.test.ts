@@ -11,8 +11,8 @@ const getFixture = async (category: string, type: string, filename: string) => {
   return await vscode.workspace.openTextDocument(
     getFixtureFilePath(
       `${isWindows ? "../../" : ""}fixtures/${category}/${type}/`,
-      filename
-    )
+      filename,
+    ),
   );
 };
 
@@ -47,7 +47,7 @@ suite("Godot Linting Tests", async () => {
       const doc = await getFixture(
         "failing",
         "linting",
-        "unnecessarytoken_bad_indent.gd"
+        "unnecessarytoken_bad_indent.gd",
       );
 
       diagArr = lintDocument(doc, diag, ochan);
@@ -59,7 +59,7 @@ suite("Godot Linting Tests", async () => {
       assert.strictEqual(diagArr[0].range.start.character, 0);
       assert.strictEqual(
         diagArr[0].message,
-        "Unexpected token Token('_INDENT', '\\t\\t')"
+        "Unexpected token Token('_INDENT', '\\t\\t')",
       );
     });
 
@@ -76,7 +76,7 @@ suite("Godot Linting Tests", async () => {
       assert.strictEqual(diagArr[0].range.start.line, 11); // Subtract one from the comparison because line numbers are 1-based
       assert.strictEqual(
         diagArr[0].message,
-        '"pass" statement not necessary (unnecessary-pass)'
+        '"pass" statement not necessary (unnecessary-pass)',
       );
     });
 
@@ -93,7 +93,7 @@ suite("Godot Linting Tests", async () => {
       assert.strictEqual(diagArr[0].range.start.line, 9); // Subtract one from the comparison because line numbers are 1-based
       assert.strictEqual(
         diagArr[0].message,
-        "unused function argument 'delta' (unused-argument)"
+        "unused function argument 'delta' (unused-argument)",
       );
     });
   });

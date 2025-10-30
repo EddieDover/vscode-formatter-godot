@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.4
+
+- gdformat and gdlint paths now accept relative path names. Credit to @zabenn
+
 ## 1.4.3
 
 - Hopefully fixed longstanding issue where Formatting would corrupt non-English characters.

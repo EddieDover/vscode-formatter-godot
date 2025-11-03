@@ -202,7 +202,7 @@ export const lintDocument = (
       vscode.workspace.getWorkspaceFolder(doc.uri),
     );
 
-    const commandBase = gdlintPath ? `"${gdlintPath}"` : "gdformat";
+    const commandBase = gdlintPath ? `"${gdlintPath}"` : "gdlint";
     const cmd = `${commandBase} "${content}" 2>&1`;
 
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);

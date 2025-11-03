@@ -3,7 +3,7 @@
   "displayName": "GDScript Formatter & Linter",
   "description": "Godot Formatter and Linter",
   "icon": "images/godot_icon.png",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/eddiedover/vscode-formatter-godot"

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.5
+
+- fixed typo leading to formatter running twice. Thanks to @Linther
+
 ## 1.4.4
 
 - gdformat and gdlint paths now accept relative path names. Credit to @zabenn
